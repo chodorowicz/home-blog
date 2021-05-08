@@ -2,7 +2,7 @@
   "title": "Jakub Chodorowocz Blog",
   "author": "Jakub Chodorowicz",
   "headerTitle": "Chodorowicz Blog",
-  "description": "A place to share learnings and reflections related mainly to web development",
+  "description": "A place to share learnings and reflections related mainly to web development.",
   "language": "en-us",
   "siteUrl": "https://tailwind-nextjs-starter-blog.vercel.app",
   "siteRepo": "https://github.com/timlrx/tailwind-nextjs-starter-blog",
