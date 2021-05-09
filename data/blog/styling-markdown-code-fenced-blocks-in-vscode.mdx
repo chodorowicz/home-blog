@@ -1,0 +1,49 @@
+---
+title: How to style markdown code blocks in VS Code 
+date: '2021-05-08'
+tags: ["VS Code", "markdown"]
+draft: false
+summary: "It's possible to style code blocks in a rich way in VS Code with a little help of Highlights extension"
+---
+
+Here's a short tip for everybody using VS Code for viewing markdown files with code blocks. This might be especially useful for all of you using VS Code as note taking app.
+
+The problem is that by default in VS Code markdown edit mode (not the preview mode, that's completely different story) code blocks are not very clearly styled. They don't really look much differently that other types of text and VS Code doesn't really offer a way an easy to achieve that. The main problem is that VS Code theming doesn't allow setting background color for different types of parsed syntax. For me ideally I'd like to set background color code blocks, so they'd be easily distinguishable from the rest of the text.
+
+<Image alt="VS Code lack of code blocks styling" src="/static/images/styling-code-1.jpg" width={1600/2} height={652/2} />
+
+Fortunatelly there's an [Highlight](https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-highlight) extension, which allow, to add much more advanced styling (background color 🎉) by defining regex patterns and styling rules. Of course ideally I'd prefer to use theme tokens from `tmTheme` parser, but it seems it's the best we can have 🤷.
+
+
+So, first of course, install the extension. Then to define to enable code blocks highlighting for a particular repo create a settings file `.vscode/settings.json`.
+
+```json
+{
+  "highlight.regexes": {
+  "([^`])(`[^`]+?`)": {
+    "filterLanguageRegex": "markdown",
+    "regexFlags": "g",
+    "filterFileRegex": ".*\\.md",
+    "decorations": [{}, {
+      "backgroundColor": "rgba(0, 0, 0, 0.05)",
+      "border": "1px dashed rgba(0, 0, 0, 0.1)",
+      "borderRadius": "3px"
+    }, {}]
+  },
+  "(```.+?```)": {
+    "regexFlags": "gs",
+    "decorations": {
+      "backgroundColor": "rgba(0, 0, 0, 0.05)",
+      "isWholeLine": true,
+    },
+    "filterLanguageRegex": "markdown",
+    "filterFileRegex": ".*\\.md"
+  }
+}
+```
+
+And now, after applying the settings,  (drums... 🥁🥁🥁).
+
+<Image alt="VS Code with code blocks styling" src="/static/images/styling-code-2.jpg" width={1598/2} height={648/2} />
+
+There's a little bit of regex trickery here around selecting single backticks `` ([^`])(`[^`]+?`) `` and triple backticks group ```` (```.+?```) ````. After that there's basically only styling left. I'm using backgrounds and a bit of border and border radius in case of inline code blocks, but you [can do a little bit more with this API](https://code.visualstudio.com/api/references/vscode-api#DecorationRenderOptions).
