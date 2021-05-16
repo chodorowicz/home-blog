@@ -28,18 +28,19 @@ export default function About() {
               <SocialIcon kind="linkedin" href={siteMetadata.linkedin} />
               <SocialIcon kind="twitter" href={siteMetadata.twitter} />
               <SocialIcon kind="stackoverflow" href={siteMetadata.stackoverflow} />
+              <SocialIcon kind="rss" href={siteMetadata.rssPath} />
             </div>
           </div>
           <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
             <p>
-              My name is Jakub and I'm a software engineer specializing in FE technologies. I’ve been working with React ecosystem for more since 2015 and I've created or took part in maintenance and development of multiple React projects.
+              My name is Jakub and I'm a software engineer specializing in FE technologies. I’ve
+              been working with React ecosystem for more since 2015 and I've created or took part in
+              maintenance and development of multiple React projects.
             </p>
             <p>
-              Currently I'm working at <a href="https://hotjar.com">Hotjar</a> where I'm helping with the transformation of the tech stack from  AngularJS to React and TypeScript. Together with my team we're building a new and amazing payments system.
-            </p>
-            <p>
-
-
+              Currently I'm working at <a href="https://hotjar.com">Hotjar</a> where I'm helping
+              with the transformation of the tech stack from AngularJS to React and TypeScript.
+              Together with my team we're building a new and amazing payments system.
             </p>
           </div>
         </div>

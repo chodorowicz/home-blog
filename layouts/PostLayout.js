@@ -7,7 +7,9 @@ import siteMetadata from '@/data/siteMetadata'
 
 const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 const discussUrl = (slug) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/blog/${slug}`)}`
+  `https://mobile.twitter.com/search?q=${encodeURIComponent(
+    `${siteMetadata.siteUrl}/blog/${slug}`
+  )}`
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
@@ -71,6 +73,38 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                 </Link>
                 {` • `}
                 <Link href={editUrl(fileName)}>{'View on GitHub'}</Link>
+              </div>
+              <div className="">
+                <h4 className="text-s dark:text-gray-400 pb-6 pt-8">
+                  Do you want to get updates about new content? Leave your email or use{' '}
+                  <a href={siteMetadata.rssPath} className="link">
+                    RSS Feed
+                  </a>
+                  .
+                </h4>
+                <form
+                  action="https://buttondown.email/api/emails/embed-subscribe/chodorowicz"
+                  method="post"
+                  target="popupwindow"
+                  onSubmit={() =>
+                    window.open('https://buttondown.email/chodorowicz', 'popupwindow')
+                  }
+                  className="embeddable-buttondown-form"
+                >
+                  <label
+                    for="bd-email"
+                    className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400 block"
+                  >
+                    Enter your email
+                  </label>
+                  <input type="email" name="email" id="bd-email" className="rounded mr-5" />
+                  <input type="hidden" value="1" name="embed" />
+                  <input
+                    type="submit"
+                    value="Subscribe"
+                    className="inline px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg shadow focus:outline-none focus:shadow-outline-blue hover:bg-blue-700 dark:hover:bg-blue-500"
+                  />
+                </form>
               </div>
             </div>
             <footer>
