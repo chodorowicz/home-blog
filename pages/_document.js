@@ -1,5 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { Favicons } from '@/components/Favicons';
+import { Favicons } from '@/components/Favicons'
+
+const GA_TRACKING_ID = 'G-47FSZ30ET9'
+const isProduction = process.env.NODE_ENV === 'production'
 
 class MyDocument extends Document {
   render() {
@@ -7,6 +10,26 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <Favicons />
+          {/* enable analytics script only for production */}
+          {!isProduction && (
+            <>
+              <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
+              <script
+                // eslint-disable-next-line react/no-danger
+
+                dangerouslySetInnerHTML={{
+                  __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_TRACKING_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+                }}
+              />
+            </>
+          )}
           <link rel="alternate" type="application/rss+xml" href="/index.xml" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
