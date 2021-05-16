@@ -11,7 +11,7 @@ class MyDocument extends Document {
         <Head>
           <Favicons />
           {/* enable analytics script only for production */}
-          {!isProduction && (
+          {isProduction && (
             <>
               <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
               <script
