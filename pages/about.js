@@ -34,7 +34,7 @@ export default function About() {
           <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
             <p>
               My name is Jakub and I'm a software engineer specializing in FE technologies. I’ve
-              been working with React ecosystem for more since 2015 and I've created or took part in
+              been working with React ecosystem since 2015 and I've created or took part in
               maintenance and development of multiple React projects.
             </p>
             <p>
