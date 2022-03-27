@@ -1,0 +1,33 @@
+---
+title: How to copy markdown URL and title using
+date: '2022-03-20'
+tags: ['JXA', 'markdown', 'Raycast', 'automation']
+draft: false
+summary: 'A script which copies markdown URL and title from multiple browser on macOS'
+images: ['/static/images/styling-code-2.jpg']
+---
+
+I was looking for a script that would copy markdown formatted URL and title `[Title of Page](https://url.of.page.com)` from multiple browsers, since I'm using different browsers regularly. This kind of script can be used standalone or in one of macOS automation apps like Alfred or Raycast.
+
+<Image
+  alt="Copy Markdown Title and URL in Raycast"
+  src="/static/images/copy-markdown-title-raycast.jpg"
+  width={1869}
+  height={1317}
+  layout="responsive"
+/>
+
+There are multiple examples of AppleScript, but most of them don't cater to multiple browsers. Also, as it turns out AppleScript automation is really cumbersome to work with. Its syntax was supposed to be readable, and it is, but due to that nature, it's not easy to write in. I'm not a fan of languages that try to mimic natural languages too much.
+
+But as it turns out Since macOS Yosemite [JavaScript](https://en.wikipedia.org/wiki/AppleScript#JavaScript_for_Automation) is the first-class automation language. It's was much easier to create a more compact version of this script in markdown.
+
+You can find the current version of the script in the following repository: [chodorowicz/copy-markdown-url-and-title: Script to copy URL and title from current browser](https://github.com/chodorowicz/copy-markdown-url-and-title).
+
+To add it to Raycast follow instructions detailed here: [raycast/script-commands:](https://github.com/raycast/script-commands).
+
+<Image
+  alt="Copy Markdown Title and URL JXA script"
+  src="/static/images/copy-markdown-title.png"
+  width={1684}
+  height={1212}
+/>
