@@ -17,7 +17,7 @@ export async function getStaticPaths() {
     })),
     fallback: false,
   }
-  // console.log(JSON.stringify(paths, null, 2))
+
   return paths
 }
 
@@ -46,9 +46,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Blog({ post, prev, next, mdxSource }) {
-  const { data, content } = post
-  // const content = <MDXRemote {...mdxSource} components={MDXComponents} />
-  console.log({ mdxSource })
+  const { data } = post
 
   return (
     <>

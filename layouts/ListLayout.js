@@ -45,8 +45,9 @@ export default function ListLayout({ posts, title }) {
         </div>
         <ul>
           {!filteredBlogPosts.length && 'No posts found.'}
-          {filteredBlogPosts.map(({ data: frontMatter }) => {
-            const { slug, date, title, summary, tags } = frontMatter
+          {filteredBlogPosts.map((post) => {
+            const { data: frontMatter, slug } = post;
+            const { date, title, summary, tags } = frontMatter
             return (
               <li key={slug} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
