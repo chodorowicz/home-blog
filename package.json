@@ -5,7 +5,7 @@
   "scripts": {
     "start": "next-remote-watch ./data",
     "dev": "next dev",
-    "build": "next build && node ./scripts/generate-sitemap",
+    "build": "next build && node --experimental-modules ./scripts/generate-sitemap.mjs",
     "serve": "next start",
     "analyze": "env ANALYZE=true next build",
     "prepare": "husky install"
