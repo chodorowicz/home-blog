@@ -3,12 +3,17 @@ import { PageSeo } from '@/components/SEO'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { getPosts } from '@/lib/mdx'
+import generateRss from '@/lib/generate-rss'
+import fs from 'fs'
 
 const MAX_DISPLAY = 5
 const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
 
 export async function getStaticProps() {
   const posts = getPosts()
+
+  const rss = generateRss(posts)
+  fs.writeFileSync('./public/index.xml', rss)
 
   return { props: { posts } }
 }

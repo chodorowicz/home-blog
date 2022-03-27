@@ -1,7 +1,6 @@
 import MDXComponents from '@/components/MDXComponents'
 import PageTitle from '@/components/PageTitle'
 import PostLayout from '@/layouts/PostLayout'
-import generateRss from '@/lib/generate-rss'
 import { getPosts } from '@/lib/mdx'
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
