@@ -1,9 +1,10 @@
-const fs = require('fs')
-const globby = require('globby')
-const prettier = require('prettier')
-const siteMetadata = require('../data/siteMetadata')
+import fs from 'fs'
+import { globby } from 'globby'
+import prettier from 'prettier'
+import { readFile } from 'fs/promises'
 
 ;(async () => {
+  const siteMetadata = JSON.parse(await readFile(new URL('../data/siteMetadata.json', import.meta.url)))
   const prettierConfig = await prettier.resolveConfig('./.prettierrc.js')
   const pages = await globby([
     'pages/*.js',
