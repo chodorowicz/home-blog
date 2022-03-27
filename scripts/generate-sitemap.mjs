@@ -2,12 +2,14 @@
 // const globby = import('globby')
 // const prettier = import('prettier')
 // const siteMetadata = import('../data/siteMetadata')
-import fs from 'fs';
+import fs from 'fs'
 import { globby } from 'globby'
 import prettier from 'prettier'
-import siteMetadata from '../data/siteMetadata.json' assert { type: 'json' };
+import { readFile } from 'fs/promises'
+// const siteMetadata = require('../data/siteMetadata.json')
 
-(async () => {
+;(async () => {
+  const siteMetadata = JSON.parse(await readFile(new URL('../data/siteMetadata.json', import.meta.url)))
   const prettierConfig = await prettier.resolveConfig('./.prettierrc.js')
   const pages = await globby([
     'pages/*.js',
