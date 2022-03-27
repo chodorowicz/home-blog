@@ -1,12 +1,7 @@
-// const fs = require('fs')
-// const globby = import('globby')
-// const prettier = import('prettier')
-// const siteMetadata = import('../data/siteMetadata')
 import fs from 'fs'
 import { globby } from 'globby'
 import prettier from 'prettier'
 import { readFile } from 'fs/promises'
-// const siteMetadata = require('../data/siteMetadata.json')
 
 ;(async () => {
   const siteMetadata = JSON.parse(await readFile(new URL('../data/siteMetadata.json', import.meta.url)))

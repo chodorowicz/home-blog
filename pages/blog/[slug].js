@@ -8,7 +8,6 @@ import { serialize } from 'next-mdx-remote/serialize'
 
 export async function getStaticPaths() {
   const posts = getPosts()
-  // console.log({ posts })
   const paths = {
     paths: posts.map((p) => ({
       params: {
@@ -27,20 +26,14 @@ export async function getStaticProps({ params }) {
   const prev = allPosts[postIndex + 1] || null
   const next = allPosts[postIndex - 1] || null
   const post = allPosts.find((p) => p.slug === params.slug)
-  // const mdxSource = await serialize(source)
   const { frontMatter, content } = post
   const mdxSource = await serialize(content, {
-    // Optionally pass remark/rehype plugins
     mdxOptions: {
       remarkPlugins: [],
       rehypePlugins: [],
     },
     scope: frontMatter,
   })
-
-  // rss
-  // const rss = generateRss(allPosts)
-  // fs.writeFileSync('./public/index.xml', rss)
 
   return { props: { post, prev, next, mdxSource } }
 }
