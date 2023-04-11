@@ -19,6 +19,10 @@ export async function getStaticProps() {
 }
 
 export default function Home({ posts }) {
+  const postsToDisplay = posts
+    .sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+    .slice(0, MAX_DISPLAY)
+
   return (
     <>
       <PageSeo
@@ -37,7 +41,7 @@ export default function Home({ posts }) {
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
-          {posts.slice(0, MAX_DISPLAY).map(({ data, slug }) => {
+          {postsToDisplay.map(({ data, slug }) => {
             const { date, title, summary, tags } = data
             return (
               <li key={slug} className="py-12">
