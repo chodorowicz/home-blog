@@ -1,9 +1,17 @@
 module.exports = {
-  semi: true,
+  semi: false,
   singleQuote: true,
   printWidth: 80,
   tabWidth: 2,
   useTabs: false,
   trailingComma: 'es5',
   bracketSpacing: true,
-};
+  overrides: [
+    {
+      files: '*.mdx',
+      options: {
+        semi: true,
+      },
+    },
+  ],
+}
