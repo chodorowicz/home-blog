@@ -1,0 +1,173 @@
+---
+title: How to copy crop image using the Canvas browser API
+date: '2023-04-10'
+tags: ['image', 'crop', 'Canvas', 'automation']
+draft: false
+summary: 'Browser Canvas APIs prove a way to crop any image'
+images: ['/static/images/styling-code-2.jpg']
+---
+
+Not every day you need to craft a utility that allows cropping an image in the browser, but in case the day has come, here's how to do it using Canvas APIs.
+
+Assuming you have the URL (or base64 encoded data) of an image you want to crop, then the first to do is to create a DOM Image element:
+
+```ts
+const image = new Image();
+image.src = src;
+image.crossOrigin = 'Anonymous';
+```
+
+Let's assume you're given the size and positioning of the desired cropped part (`x`, `y`, `width`, `height`). Let's create the Canvas element with the desired crop size (`width` and `height`) and render the appropriate part of the source image into the newly created Canvas element.
+
+```ts
+const canvas = document.createElement('canvas');
+canvas.width = width;
+canvas.height = height;
+const context = canvas.getContext('2d');
+context.drawImage(image, x, y, width, height, 0, 0, width, height);
+```
+
+Now there's only one thing left to do: return the base64-encoded data of the cropped part.
+
+```ts
+return canvas.toDataURL('image/jpeg');
+```
+
+Here's the full function that powers cropping:
+
+```ts
+interface Props {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  src: string;
+}
+
+export async function getPartOfImage({
+  x,
+  y,
+  width,
+  height,
+  src,
+}: Props): Promise<string | undefined> {
+  if (width === 0 || height === 0) {
+    return;
+  }
+  const image = new Image();
+  return new Promise((resolve) => {
+    image.src = src;
+    image.crossOrigin = 'Anonymous';
+
+    // remember that loading image is async
+    image.addEventListener('load', () => {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      if (!context) {
+        return;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      context.drawImage(image, x, y, width, height, 0, 0, width, height);
+      const croppedData = canvas.toDataURL('image/jpeg');
+
+      resolve(croppedData);
+    });
+  });
+}
+```
+
+<IFrame
+  src="https://codesandbox.io/embed/image-cropping-using-canvas-2n4kfw?fontsize=14&hidenavigation=1&initialpath=%2Fjsonly.html&module=%2Fsrc%2Findex-jsonly.ts&moduleview=1&theme=dark"
+  style={{
+    width: '100%',
+    height: '700px',
+    border: '0',
+    borderRadius: '4px',
+    overflow: 'hidden',
+  }}
+  title="Image Cropping Using Canvas"
+/>
+
+Cool, that's pretty neat. But let's try to make it more interactive and see how somebody can use it in real life in a simple React application.
+
+Let's use [@bmunozg/react-image-area](https://www.npmjs.com/package/@bmunozg/react-image-area) to allow selecting part of the image as a crop area. We're keeping the selected area in the state in `areas` variable, and handling changes to the selected area by calling `onChangeHandler` with the new area that the user has selected.
+
+```tsx
+//...
+const [croppedImage, setCroppedImage] = useState<string | undefined>(undefined);
+const [areas, setAreas] = useState<IArea[]>([]);
+// ...
+return (
+  <AreaSelector
+    areas={areas}
+    onChange={(areas) => onChangeHandler(areas, source)}
+    maxAreas={1}
+  >
+    <SourceImage />
+  </AreaSelector>
+);
+```
+
+And here's how the handler looks like:
+
+```tsx
+const onChangeHandler = useMemo(
+  () => async (areas: IArea[], image: string) => {
+    setAreas(areas); // let's store selected area
+
+    const { naturalWidth, clientWidth } = imageRef.current ?? {
+      naturalWidth: 0,
+      clientWidth: 0,
+    };
+
+    // let's not divide by 0
+    if (naturalWidth === 0) {
+      return;
+    }
+
+    // the image in the browser might not be rendered at 100% of its width
+    //  so we need to adjust the widths sent to cropping function, since it operates
+    //  on dimensions of full width of the image
+    const ratio = clientWidth / naturalWidth;
+
+    const area = areas[0];
+
+    // we only set new crop after user has finished dragging the crop area
+    if (!area.isChanging) {
+      const { x, y, width, height } = area;
+      // same function that was used before to get cropped image using Canvas
+      const screenshotArea = await getPartOfImage({
+        x: x / ratio,
+        y: y / ratio,
+        width: width / ratio,
+        height: height / ratio,
+        src: image,
+      });
+      if (screenshotArea) {
+        setScreenshotSize({ width: area.width, height: area.height });
+        setCroppedImage(screenshotArea);
+      }
+    }
+  },
+  []
+);
+```
+
+There's a need for some trickery to get the right crop if the source image renders at a reduced size. The crop area renders over the image, which is rendered in a flex layout, potentially not a full size. But the crop function `getPartOfImage` operates on the full-size dimensions. That's why we need to calculate the `ratio` to scale the crop size and `x`, `y' positions to match the image's actual size.
+
+And voila. Here's the full version of the app.
+
+<IFrame
+  src="https://codesandbox.io/embed/image-cropping-using-canvas-2n4kfw?fontsize=14&hidenavigation=1&initialpath=%2Freact.html&theme=dark"
+  style={{
+    width: '100%',
+    height: '700px',
+    border: '0',
+    borderRadius: '4px',
+    overflow: 'hidden',
+  }}
+  title="Image Cropping Using Canvas"
+/>

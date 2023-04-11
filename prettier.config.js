@@ -6,4 +6,13 @@ module.exports = {
   useTabs: false,
   trailingComma: 'es5',
   bracketSpacing: true,
+  overrides: [
+    {
+      files: '*.mdx',
+      options: {
+        printWidth: 80,
+        semi: true,
+      },
+    },
+  ],
 }

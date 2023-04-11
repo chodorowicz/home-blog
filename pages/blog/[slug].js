@@ -28,7 +28,7 @@ export async function getStaticProps({ params }) {
   const { frontMatter, content } = post
   const mdxSource = await serialize(content, {
     mdxOptions: {
-      remarkPlugins: [],
+      remarkPlugins: [require('remark-prism')],
       rehypePlugins: [],
     },
     scope: frontMatter,
