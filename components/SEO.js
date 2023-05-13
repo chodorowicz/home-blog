@@ -37,12 +37,12 @@ export const PageSeo = ({ title, description, url }) => {
     <NextSeo
       title={`${title} – ${siteMetadata.title}`}
       description={description}
-      canonical={url}
       openGraph={{
         url,
         title,
         description,
       }}
+      {...(!!canonical && { canonical })}
     />
   )
 }
