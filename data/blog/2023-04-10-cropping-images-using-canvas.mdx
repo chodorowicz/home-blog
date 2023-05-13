@@ -1,9 +1,9 @@
 ---
-title: How to copy crop image using the Canvas browser API
+title: How to copy and crop image using the Canvas browser API
 date: '2023-04-10'
 tags: ['image', 'crop', 'Canvas', 'automation']
 draft: false
-summary: 'Browser Canvas APIs prove a way to crop any image'
+summary: 'Browser Canvas APIs provide a way to crop any image'
 images: ['/static/images/styling-code-2.jpg']
 ---
 
@@ -156,7 +156,7 @@ const onChangeHandler = useMemo(
 );
 ```
 
-There's a need for some trickery to get the right crop if the source image renders at a reduced size. The crop area renders over the image, which is rendered in a flex layout, potentially not a full size. But the crop function `getPartOfImage` operates on the full-size dimensions. That's why we need to calculate the `ratio` to scale the crop size and `x`, `y' positions to match the image's actual size.
+There's a need for some trickery to get the right crop if the source image renders at a reduced size. The crop area renders over the image, which is rendered in a flex layout, potentially not a full size. But the crop function `getPartOfImage` operates on the full-size dimensions. That's why we need to calculate the `ratio` to scale the crop size and `x`, `y` positions to match the image's actual size.
 
 And voila. Here's the full version of the app.
 
