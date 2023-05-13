@@ -42,7 +42,7 @@ export const PageSeo = ({ title, description, url }) => {
         title,
         description,
       }}
-      {...(!!canonical && { canonical })}
+      {...(!!url && { canonical: url })}
     />
   )
 }
